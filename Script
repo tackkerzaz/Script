@@ -1,0 +1,92 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Window = Rayfield:CreateWindow({
+    Name = "Tack HUB",
+    LoadingTitle = "Tack HUB",
+    LoadingSubtitle = "By Tack HUB",
+    ConfigurationSaving = {
+       Enabled = true,
+       FolderName = nil, -- Create a custom folder for your hub/game
+       FileName = "Tack HUB"
+    },
+    Discord = {
+       Enabled = true,
+       Invite = "nFcxzgcW", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+       RememberJoins = false -- Set this to false to make them join the discord every time they load it up
+    },
+    KeySystem = true, -- Set this to true to use our key system
+    KeySettings = {
+       Title = "Tack HUB",
+       Subtitle = "https://discord.gg/nFcxzgcW",
+       Note = "[ Get Key In Our Discord ]",
+       FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+       SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+       Key = {"1255421"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+    }
+ })
+
+-- Values
+
+_G.autoHatchWorld42 = true
+_G.autoHatchMaxWorld42 = true
+
+-- Functions
+
+function autoHatchWorld42()
+    while _G.autoHatchWorld42 == true do
+        local args = {
+            [1] = workspace.Worlds.JJK2.JJK2Egg,
+            [2] = 13
+        }
+        
+        game:GetService("ReplicatedStorage").Remote.OpenEgg:InvokeServer(unpack(args))                        
+        wait(.00001)
+    end
+end
+
+function autoHatchMaxWorld42()
+    while _G.autoHatchMaxWorld42 == true do
+        local args = {
+            [1] = "JJK2Egg"
+        }
+        
+        game:GetService("ReplicatedStorage").Remote.AttemptMultiOpen:FireServer(unpack(args))
+        wait(.001)
+    end
+end
+
+-- Tabs  
+
+local EggsTab = Window:CreateTab("[ AutoHatch ]", 4483362458) -- Title, Image
+local DupeTab = Window:CreateTab("[ DupeItem ]", 4483362458) -- Title, Image
+
+-- Toggles
+
+local Toggle = EggsTab:CreateToggle({
+    Name = "[ AutoHatch|World42]",
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.autoHatchWorld42= Value
+        autoHatchWorld42()  
+    end,
+ })
+
+ local Toggle = EggsTab:CreateToggle({
+    Name = "[ AutoHatchMax|World42]",
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.autoHatchMaxWorld42= Value
+        autoHatchMaxWorld42()  
+    end,
+ })
+
+ -- Buttons
+
+ local Button = DupeTab:CreateButton({
+    Name = "[ DupeItem ]",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/sandwichk/RobloxScripts/main/Scripts/BadWare/Dupe/AFSim", true))()   
+    end,
+ })
